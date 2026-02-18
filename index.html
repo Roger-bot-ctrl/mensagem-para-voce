@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Uma Mensagem</title>
+
+<style>
+body {
+    background-color: black;
+    color: #00ff9d;
+    font-family: "Courier New", monospace;
+    padding: 40px;
+    font-size: 20px;
+    line-height: 1.6;
+}
+
+#terminal::after {
+    content: "_";
+    animation: piscar 1s infinite;
+}
+
+@keyframes piscar {
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
+}
+</style>
+</head>
+
+<body>
+
+<div id="terminal"></div>
+
+<script>
+const mensagens = [
+    "Iniciando sistema emocional...",
+    "",
+    "Analisando memória...",
+    "",
+    "while (coração_batendo) {",
+    "    pensando_em_você(Lorena);",
+    "}",
+    "",
+    "// loop infinito ativo...",
+    ""
+];
+
+let linhaAtual = 0;
+let charAtual = 0;
+
+function digitar() {
+    const terminal = document.getElementById("terminal");
+
+    if (linhaAtual < mensagens.length) {
+        if (charAtual < mensagens[linhaAtual].length) {
+            terminal.innerHTML += mensagens[linhaAtual].charAt(charAtual);
+            charAtual++;
+            setTimeout(digitar, 40);
+        } else {
+            terminal.innerHTML += "<br>";
+            linhaAtual++;
+            charAtual = 0;
+            setTimeout(digitar, 300);
+        }
+    } else {
+        // reinicia o loop infinito (como while true)
+        setTimeout(() => {
+            terminal.innerHTML += "<br>";
+            linhaAtual = 0;
+            charAtual = 0;
+            digitar();
+        }, 1000);
+    }
+}
+
+// inicia o efeito ao abrir o site
+digitar();
+</script>
+
+</body>
+</html>
