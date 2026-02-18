@@ -11,12 +11,40 @@ body {
     font-family: "Courier New", monospace;
     padding: 40px;
     font-size: 20px;
-    line-height: 1.6;
+    line-height: 1.7;
 }
 
 #terminal::after {
     content: "_";
     animation: piscar 1s infinite;
+}
+
+button {
+    background: #00ff9d;
+    color: black;
+    border: none;
+    padding: 12px 26px;
+    font-family: monospace;
+    font-size: 16px;
+    cursor: pointer;
+    margin-bottom: 30px;
+    border-radius: 6px;
+}
+
+button:hover {
+    background: #00cc7a;
+}
+
+.traducao {
+    margin-top: 40px;
+    color: #8affc1;
+    font-size: 18px;
+    opacity: 0;
+    transition: opacity 2s ease;
+}
+
+iframe {
+    display: none;
 }
 
 @keyframes piscar {
@@ -29,20 +57,35 @@ body {
 
 <body>
 
+<button onclick="tocarMusica()">▶ Iniciar música</button>
+
+<!-- Player YouTube escondido -->
+<iframe id="ytplayer"
+width="0"
+height="0"
+src="https://www.youtube.com/embed/VIDEO_ID?enablejsapi=1"
+frameborder="0"
+allow="autoplay">
+</iframe>
+
 <div id="terminal"></div>
+
+<div id="traducao" class="traducao">
+    // tradução: mesmo em silêncio,<br>
+    // você ainda passa pela minha mente.
+</div>
 
 <script>
 const mensagens = [
-    "Iniciando sistema emocional...",
+    "Inicializando sistema emocional...",
     "",
-    "Analisando memória...",
+    "Carregando memórias...",
     "",
     "while (coração_batendo) {",
     "    pensando_em_você(Lorena);",
     "}",
     "",
-    "// loop infinito ativo...",
-    ""
+    "// execução contínua..."
 ];
 
 let linhaAtual = 0;
@@ -55,7 +98,7 @@ function digitar() {
         if (charAtual < mensagens[linhaAtual].length) {
             terminal.innerHTML += mensagens[linhaAtual].charAt(charAtual);
             charAtual++;
-            setTimeout(digitar, 40);
+            setTimeout(digitar, 35);
         } else {
             terminal.innerHTML += "<br>";
             linhaAtual++;
@@ -63,17 +106,22 @@ function digitar() {
             setTimeout(digitar, 300);
         }
     } else {
-        // reinicia o loop infinito (como while true)
+        document.getElementById("traducao").style.opacity = 1;
+
         setTimeout(() => {
             terminal.innerHTML += "<br>";
             linhaAtual = 0;
             charAtual = 0;
             digitar();
-        }, 1000);
+        }, 2000);
     }
 }
 
-// inicia o efeito ao abrir o site
+function tocarMusica() {
+    const iframe = document.getElementById("ytplayer");
+    iframe.src += "&autoplay=1";
+}
+
 digitar();
 </script>
 
